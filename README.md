@@ -1,86 +1,86 @@
-# :snake: Easy data processing with Azure functions and Python
+# <a name="snake-easy-data-processing-with-azure-functions-and-python"></a>:snake: Processamento de dados fácil com Azure Functions e Python
 
-[![License](https://img.shields.io/badge/License-MIT-gray.svg?colorA=2D2A56&colorB=7A76C2&style=flat.svg)]((https://opensource.org/licenses/MIT))
-![docs](https://github.com/trallard/pycon2020-azure-functions/workflows/docs/badge.svg)
+[![Documentos](https://img.shields.io/badge/License-MIT-gray.svg?colorA=2D2A56&colorB=7A76C2&style=flat.svg)]((https://opensource.org/licenses/MIT))
+![de licença](https://github.com/trallard/pycon2020-azure-functions/workflows/docs/badge.svg)
 
-This repository contains the tutorial for the Microsoft Azure Sponsored workshop. As well as all the solutions to the different sections.
+Este repositório contém o tutorial para o workshop patrocinado do Microsoft Azure. Ele também inclui todas as soluções para as diferentes seções.
 
 <div align="center">
 <img src="./docs/_static/icons/MSFT_Logo_Color.png" width="400px">
 </div>
 
-:sparkles: You can access the tutorial (self-paced) at <https://aka.ms/pycon2020-azurefunctions>.
+:sparkles: Você pode acessar o tutorial (individualizado) em <https://aka.ms/pycon2020-azurefunctions>.
 
-:sparkles: The solutions are located in this repository in the [solutions](./solutions) directory.
-
----
-
-![NEW](https://img.shields.io/badge/-NEW-gray.svg?colorB=18a4e0)  :video_camera:  Tutorial video! Go to the PyCon US Youtube Channel: <https://www.youtube.com/watch?v=PV7iy6FPjAY>
-
-![NEW](https://img.shields.io/badge/-NEW-gray.svg?colorB=18a4e0)  :sparkles: Accompanying slides are on SpeakerDeck <https://speakerdeck.com/trallard/easy-data-processing-on-azure-with-serverless-functions>
+:sparkles: As soluções estão localizadas neste repositório no diretório [Soluções](./solutions).
 
 ---
 
-## Table of Contents
+![NOVO](https://img.shields.io/badge/-NEW-gray.svg?colorB=18a4e0)  :video_camera:  Vídeo de tutorial! Vá para o canal do YouTube da PyCon US: <https://www.youtube.com/watch?v=PV7iy6FPjAY>
 
-- [:snake: Easy data processing with Azure functions and Python](#snake-easy-data-processing-with-azure-functions-and-python)
-  - [Table of Contents](#table-of-contents)
-  - [:pencil: Description](#pencil-description)
-  - [:bookmark: Outline](#bookmark-outline)
-  - [:computer: Pre-requisites](#computer-pre-requisites)
-  - [:eyes: Solutions](#eyes-solutions)
-  - [License](#license)
+![NOVO](https://img.shields.io/badge/-NEW-gray.svg?colorB=18a4e0)  :sparkles: Os slides complementares estão no SpeakerDeck <https://speakerdeck.com/trallard/easy-data-processing-on-azure-with-serverless-functions>
 
-## :pencil: Description
+---
 
-Serverless computing (also known as function as a service, FaaS) is a design patterns where applications are hosted by a third-party service (i.e. Azure) eliminating the need for server software and hardware management by the developer.
+## <a name="table-of-contents"></a>Sumário
 
-Serverless can be an excellent alternative for Pythonistas interested in data processing as it allows them to focus on their code rather than the cloud infrastructure. This workshop we introduce attendees to Azure Functions for data processing scenarios (including data acquisition, cleaning and transformation and storage for subsequent usage).
+- [:snake: Processamento de dados fácil com funções do Azure e Python](#snake-easy-data-processing-with-azure-functions-and-python)
+  - [Sumário](#table-of-contents)
+  - [:pencil: Descrição](#pencil-description)
+  - [:bookmark: Estrutura](#bookmark-outline)
+  - [:computer: Pré-requisitos](#computer-pre-requisites)
+  - [:eyes: Soluções](#eyes-solutions)
+  - [Licença](#license)
 
-After this tutorial, attendees will have practical experience with Azure functions for data processing scenarios. Also, they will leave the workshop with a basic function for data processing that could be further modified/extended to suit their needs/requirements.
+## <a name="pencil-description"></a>:pencil: Description
 
-## :bookmark: Outline
+A computação sem servidor (também conhecida como função como serviço, FaaS) é um padrão de design em que os aplicativos são hospedados por um serviço de terceiros (ou seja, o Azure), eliminando a necessidade de gerenciamento de hardware e software do servidor pelo desenvolvedor.
 
-1. Introduction to serverless and Azure functions
-2. Creating your first Azure function:
-   - Create a simple scheduled function using the VS Code extension
-   - Familiarise with functions projects and structure
-   - Running and debugging locally
-3. Functions deployment
-   - Deploy your function to Azure
-   - Familiarise with the Azure portal
-4. Data processing use case
-   - Updating your function to collect data
-   - Data cleaning, aggregation and storage
+A computação sem servidor pode ser uma excelente alternativa para Pythonistas interessados no processamento de dados, pois permite que eles se concentrem no código, e não na infraestrutura de nuvem. Este workshop apresentará aos participantes o Azure Functions para cenários de processamento de dados (incluindo aquisição de dados, limpeza e transformação e armazenamento para uso posterior).
 
-## :computer: Pre-requisites
+Após este tutorial, os participantes terão experiência prática com as funções do Azure para cenários de processamento de dados. Além disso, eles deixarão o workshop com uma função básica para processamento de dados que pode ser modificada/ampliada para atender às suas necessidades/requisitos.
 
-This workshop is aimed at folks interested in data processing, data engineering or data science. The goal is to provide a practical introduction to serverless for data processing scenarios.
+## <a name="bookmark-outline"></a>:bookmark: Estrutura
 
-We assume that you:
+1. Introdução à computação sem servidor e às funções do Azure
+2. Como criar sua primeira função do Azure:
+   - Criar uma função agendada simples usando a extensão do VS Code
+   - Familiarizar-se com a estrutura e os projetos de funções
+   - Como executar e depurar localmente
+3. Implantação de funções
+   - Implantar sua função no Azure
+   - Familiarizar-se com o portal do Azure
+4. Caso de uso de processamento de dados
+   - Como atualizar sua função para coletar dados
+   - Limpeza de dados, agregação e armazenamento
 
-- Have intermediate Python knowledge:
-  - Have a good understanding of how to write and call functions
-  - Have a good understanding of how Python modules and scripts work
+## <a name="computer-pre-requisites"></a>:computer: Pré-requisitos
 
-- Have some experience with data wrangling and/or data processing (not extensive experience required but have, for example, used libraries like pandas and requests for data wrangling and API access)
+Este workshop destina-se a pessoas interessadas em processamento de dados, engenharia de dados ou ciência de dados. O objetivo é fornecer uma introdução prática à computação sem servidor para cenários de processamento de dados.
 
-- Are comfortable using the command line/terminal (no need to be an expert but should be comfortable enough to navigate file systems and perform necessary Git tasks)
+Supomos que você:
 
-## :eyes: Solutions
+- Tenha conhecimento intermediário de Python:
+  - Tenha uma boa compreensão de como escrever e chamar funções
+  - Tenha um bom conhecimento de como funcionam os módulos e scripts do Python
 
-The solutions can be found in the [solutions directory](./solutions) in this repository.
+- Tenha alguma experiência com estruturação de dados e/ou processamento de dados (não é necessária uma ampla experiência, mas ter usado, por exemplo, bibliotecas como Pandas e solicitações de estruturação de dados e acesso a API)
 
-- Timer function: [API data acqusition only](./solutions/01-timer-function-data-acquisition/)
-- Timer function: [API + Blob binding](./solutions/02-timer-function-Blob-binding/)
-- Timer function + Data processing/email sending: [full pipeline](./solutions/03-full-pipeline/)
+- Sinta-se confortável ao usar a linha de comando/terminal (não é necessário ser um especialista, mas se sentir confortável o suficiente para navegar pelos sistemas de arquivos e executar tarefas necessárias do Git)
 
-ARM templates included:
+## <a name="eyes-solutions"></a>:eyes: Soluções
 
-- [Storage account and Blob Storage](./solutions/../storage-blob-container/azuredeploy.json)
+As soluções podem ser encontradas no [diretório de soluções](./solutions) neste repositório.
 
-## :key: License
+- Função de temporizador: [Somente aquisição de dados de API](./solutions/01-timer-function-data-acquisition/)
+- Função de temporizador: [API + Associação de Blobs](./solutions/02-timer-function-Blob-binding/)
+- Função de temporizador + Processamento de dados/envio de emails: [pipeline completo](./solutions/03-full-pipeline/)
 
-The contents in this repo are licensed under the [https://opensource.org/licenses/MIT](MIT) OSI license.
+Modelos de ARM incluídos:
 
-The icons used in the tutorial are from [Smashicons](https://www.flaticon.com/authors/smashicons) from [Flaticon](https://www.flaticon.com/).
+- [Conta de armazenamento e Armazenamento de Blobs](./solutions/../storage-blob-container/azuredeploy.json)
+
+## <a name="key-license"></a>:key: Licença
+
+O conteúdo deste repositório é licenciado sob a licença [https://opensource.org/licenses/MIT](MIT) OSI.
+
+Os ícones usados no tutorial são de [Smashicons](https://www.flaticon.com/authors/smashicons) da [Flaticon](https://www.flaticon.com/).
