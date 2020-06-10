@@ -1,47 +1,47 @@
 .. _setup:
 
-|laptop| Setup and installation
+<a name="laptop-setup-and-installation"></a>|laptop| Instalação e configuração
 =================================
 
-Welcome to the Azure sponsored workshop for PyCon 2020 (now online)!
+Bem-vindo ao workshop patrocinado do Azure para a PyCon 2020 (agora online)!
 
-This section will guide you through the prerequisites for the workshop.
+Esta seção orientará você pelos pré-requisitos do workshop.
 
-Each requirement is outlined here with detailed instructions on their installation.
+Cada requisito é descrito aqui com instruções detalhadas sobre sua instalação.
 
-Python 3.x
+<a name="python-3x"></a>Python 3.x
 ------------
-Make sure to have one of these Python versions installed:
+Você deve ter uma das seguintes versões do Python instalada:
 
 - 3.6
 - 3.7
 - 3.8
 
-These are the supported versions by Azure Functions. If you already have one installed jump straight to the rest of the setup instructions.
+Essas são as versões compatíveis com o Azure Functions. Se você já tiver uma instalada, vá diretamente para o restante das instruções de configuração.
 
-Otherwise, you can follow this fantastic tutorial from  `Real Python <https://realpython.com/installing-python/>`_ to get a clean Python install.
+Caso contrário, você pode seguir este tutorial fantástico da `Real Python <https://realpython.com/installing-python/>`_ para obter uma instalação limpa do Python.
 
-VS Code
+<a name="vs-code"></a>VS Code
 --------
 
-We will be using Visual Studio Code (or VS Code for short).
-VS Code is an Open Source IDE that can be easily extended or enhanced with extensions.
-For this particular tutorial, we will use the Python and the Azure functions extensions.
-To get started:
+Usaremos o Visual Studio Code (também chamado de VS Code).
+O VS Code é um IDE de software livre que pode ser facilmente estendido ou aprimorado com extensões.
+Para este tutorial específico, usaremos as extensões do Python e das funções do Azure.
+Para começar:
 
-1. Download and install `VS Code <https://code.visualstudio.com//?WT.mc_id=?WT.mc_id=pycon_tutorial-github-taallard>`_ . When directed to the install page, this should identify your OS. Download the install file and follow the instructions.
-2. Install the `Python VS Code extension <https://marketplace.visualstudio.com/itemdetails?itemName=ms-python.python&wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard>`_ . Click on the Install button on the extension website. This will launch VS Code and ask for your confirmation to install.
-3. Install the `Azure Functions extension <https://marketplace.visualstudio.com/itemdetails?itemName=ms-azuretools.vscode-azurefunctions&wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard>`_
+1. Baixe e instale o `VS Code <https://code.visualstudio.com//?WT.mc_id=?WT.mc_id=pycon_tutorial-github-taallard>`_ . Quando você for direcionado para a página de instalação, ela deverá identificar seu sistema operacional. Baixe o arquivo de instalação e siga as instruções.
+2. Instale a `Python VS Code extension <https://marketplace.visualstudio.com/itemdetails?itemName=ms-python.python&wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard>`_ . Clique no botão Instalar no site da extensão. Isso iniciará o VS Code e solicitará sua confirmação para instalar.
+3. Instale a `Azure Functions extension <https://marketplace.visualstudio.com/itemdetails?itemName=ms-azuretools.vscode-azurefunctions&wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard>`_
 
-Azure account and credits
+<a name="azure-account-and-credits"></a>Conta e créditos do Azure
 ---------------------------
 
-You can sign up to your Azure account and receive 12 months of some free services as well as 200 USD in credits.
-To get started with Azure visit  `this link <https://cda.ms/1fM>`_.
+Você pode se inscrever em sua conta do Azure e receber 12 meses de alguns serviços gratuitos, bem como US$ 200 em créditos.
+Para começar a usar o Azure, acesse `this link <https://cda.ms/1fM>`_.
 
-Azure CLI and functions core tool
+<a name="azure-cli-and-functions-core-tool"></a>Ferramenta básica de funções e CLI do Azure
 ----------------------------------
-- We first need to install the Azure CLI  to be able to deploy our functions
+- Primeiro, precisamos instalar o CLI do Azure para poder implantar nossas funções
 
 .. tabs::
 
@@ -64,7 +64,7 @@ Azure CLI and functions core tool
     The instructions vary depending on your distribution. Please follow the
     instructions in the `official docs <https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest?WT.mc_id=pycon_tutorial-github-taallard>`_
 
-- To be able to run and test your functions locally, we need to install the Azure functions core tools:
+- Para poder executar e testar suas funções localmente, precisamos instalar as ferramentas básicas de funções do Azure:
 
 .. tabs::
 
@@ -93,54 +93,50 @@ Azure CLI and functions core tool
 
     For Debian/Ubuntu distributions:
 
-    1. Install  Microsoft package repository GPG key, to validate package integrity:
+    1. Instale a chave GPG do repositório de pacotes da Microsoft para validar a integridade do pacote:
 
       .. code-block::
 
-        curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-        sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+        curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg  sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
 
-    2. Set up the .NET development source list before doing an APT update.
-
-      .. code-block::
-
-        # Ubuntu
-        sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod $(lsb_release -cs) main" > /etc/apt/sources.list.d/dotnetdev.list'
-
-        # Debian
-
-        sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/debian/$(lsb_release -rs | cut -d'.' -f 1)/prod $(lsb_release -cs) main" > /etc/apt/sources.list.d/dotnetdev.list'
-
-    3. Start the APT source update and install the tools
+    2. Configure a lista de fontes de desenvolvimento do .NET antes de fazer uma atualização de APT.
 
       .. code-block::
 
-        sudo apt-get update
-        sudo apt-get install azure-functions-core-tools
+        # <a name="ubuntu"></a>Ubuntu
+        sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu- $(lsb_release -cs)-prod $(lsb_release -cs) main" > /etc/apt/sources.list.d/dotnetdev.list'
 
-    For more detailed instructions, visit the `corresponding docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=linux%2Ccsharp%2Cbash?WT.mc_id=pycon_tutorial-github-taallard>`_.
+        # <a name="debian"></a>Debian
 
-Other accounts
+        sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/debian/ $(lsb_release -rs | cut -d'.' -f 1)/prod $(lsb_release -cs) main" > /etc/apt/sources.list.d/dotnetdev.list'
+
+    3. Inicie a atualização de fonte de APT e instale as ferramentas
+
+      .. code-block::
+
+        sudo apt-get update  sudo apt-get install azure-functions-core-tools
+
+    Para obter instruções mais detalhadas, acesse `corresponding docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=linux%2Ccsharp%2Cbash?WT.mc_id=pycon_tutorial-github-taallard>`_.
+
+<a name="other-accounts"></a>Outras contas
 ----------------
 
-StackOverFlow API
+API StackOverFlow
 *******************
 
-We will use the StackOverFlow API to collect data. For this you will need to register for an app key.
+Usaremos a API StackOverFlow para coletar dados. Para isso, você precisará se registrar para obter uma chave de aplicativo.
 
-#. Head over to `<https://api.stackexchange.com/>`_ and click on Register for an App Key. Note that you will need to log into StackOverFlow to get a ner key.
-#. In the following screen you will need to provide the details of the app. They do not have to be extensive but you can always go back and change them later. Once filled in, click on the Register app button.
+#<a name="-head-over-to-httpsapistackexchangecom_-and-click-on-register-for-an-app-key-note-that-you-will-need-to-log-into-stackoverflow-to-get-a-ner-key"></a>. Vá até `<https://api.stackexchange.com/>`_ e clique em Registrar-se para obter uma chave de aplicativo. Observe que você precisará entrar no StackOverFlow para obter uma chave ner.
+#<a name="-in-the-following-screen-you-will-need-to-provide-the-details-of-the-app-they-do-not-have-to-be-extensive-but-you-can-always-go-back-and-change-them-later-once-filled-in-click-on-the-register-app-button"></a>. Na tela seguinte, forneça os detalhes do aplicativo. Eles não precisam ser abrangentes, mas você pode voltar a qualquer momento e alterá-los mais tarde. Depois de preencher os detalhes, clique no botão Registrar aplicativo.
 
     .. image:: _static/images/snaps/stack.png
             :align: center
             :alt: StackOverFlow
-#. The next screen will display your apps details. Make sure to keep the key and the client secret safe at all times.
+#<a name="-the-next-screen-will-display-your-apps-details-make-sure-to-keep-the-key-and-the-client-secret-safe-at-all-times"></a>. A tela seguinte exibirá os detalhes do seu aplicativo. Mantenha a chave e o segredo do cliente seguros o tempo todo.
 
 
-.. GitHub
-.. *******************
+.. GitHub .. *******************
 
-.. You will need a GitHub account also to keep your code in version control and to create a GitHub action to deploy your function.
+.. Você também precisará de uma conta do GitHub para manter seu código em controle de versão e criar uma ação do GitHub para implantar sua função.
 
-.. If you do not have an account yet head over to `<https://github.com>`_  and register for a new account.
-
+.. Se ainda não tiver uma conta, vá até `<https://github.com>`_ e registre-se para obter uma nova conta.
