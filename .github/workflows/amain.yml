@@ -1,0 +1,53 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "docs/**"
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  docs:
+    name: Build docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install Poetry
+        uses: dschep/install-poetry-action@v1.3
+
+      - name: Cache Poetry virtualenv
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: ~/.virtualenvs
+          key: poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            poetry-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install deps
+        run: poetry install
+        if: steps.cache.outputs.cache-hit != 'true'
+
+      - name: Build docs
+        run: |
+          poetry run nox -s docs
+
+      - name: Deploy to GH Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_build/html
+          commit_message: "Build - ${{github.event.head_commit.message}}"
+          user_name: "GitHub Action bot"
+          user_email: "action@github.com"
