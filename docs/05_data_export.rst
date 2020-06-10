@@ -1,46 +1,46 @@
-|pipe| Adding Blob storage bindings
+<a name="pipe-adding-blob-storage-bindings"></a>|pipe| Adicionar associações do Armazenamento de Blobs
 ====================================
 
-You should now have a working function that collects data from the StackExchange API.
+Agora você deve ter uma função operacional que coleta dados da API StackExchange.
 
-In this section, we will:
+Nesta seção, iremos:
 
-- Complete the function to store the data in AzureBlob storage
-- Create a second function that identifies the addition of a file to Azure Blob storage and triggers a second function
-- Create a database to store our cleaned data and modify the function to store the database
+- Concluir a função para armazenar os dados no Armazenamento de Blobs do Azure
+- Criar uma segunda função que identifica a adição de um arquivo no Armazenamento de Blobs do Azure e dispara uma segunda função
+- Criar um banco de dados para armazenar nossos dados limpos e modificar a função para armazenar o banco de dados
 
-.. tip:: The repository containing all the scripts and solutions to this tutorial can be found at `<https://github.com/trallard/pycon2020-azure-functions>`_.
+.. tip:: O repositório que contém todos os scripts e soluções para este tutorial pode ser encontrado em `<https://github.com/trallard/pycon2020-azure-functions>`_.
 
     👉🏼 The code for this section is located in `<https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/02-timer-function-Blob-binding>`_ 
 
 
-|light| Triggers and bindings
+<a name="light-triggers-and-bindings"></a>|light| Gatilhos e associações
 --------------------------------
 
-- **Triggers**: these cause a function to run. They can be an HTTP request, a queue message or an event grid. Each function **must** have one trigger.
+- **Gatilhos**: fazem com que uma função seja executada. Eles podem ser uma solicitação HTTP, uma mensagem de fila ou uma grade de eventos. Cada função **precisa** ter um gatilho.
 
-- **Binding**: is a connection between a function and another resource or function. They can be *input bindings, output bindings* or both. These are optional, and a function can have one or more bindings.
+- **Associação**: é uma conexão entre uma função e outro recurso ou função. Elas podem ser *associações de entrada, associações de saída* ou ambas. Elas são opcionais, e uma função pode ter uma ou mais associações.
 
-1. Create Azure Blob Storage
+1. Criar o Armazenamento de Blobs do Azure
 ******************************************
 
-We already created a Storage Account in the :ref:`deployfn` section. The next step is to create a Blob Storage container so we can start saving the data collected through your function.
+Já criamos uma Conta de Armazenamento na seção :ref:`deployfn`. A próxima etapa é criar um contêiner de Armazenamento de Blobs para que possamos começar a salvar os dados coletados por meio de sua função.
 
-#. Head over to |azureportal| and click on **Storage accounts** on the left sidebar and then on your function storage account.
+#<a name="-head-over-to-azureportal-and-click-on-storage-accounts-on-the-left-sidebar-and-then-on-your-function-storage-account"></a>. Vá para o |azureportal| e clique em **Contas de armazenamento** na barra lateral esquerda e, em seguida, em sua conta de armazenamento de função.
 
     .. image:: _static/images/snaps/storagedashboard.png
         :align: center
         :alt: Storager dashboard
 
-#. Click on either of the **Containers** section (see image).
+#<a name="-click-on-either-of-the-containers-section-see-image"></a>. Clique em uma das seções **Contêineres** (confira a imagem).
 
     .. image:: _static/images/snaps/containers.png
         :align: center
         :alt: Containers screenshot
 
-#. Click on **+ Container** at the top of the bar and provide a name for your Blob container.
+#<a name="-click-on--container-at-the-top-of-the-bar-and-provide-a-name-for-your-blob-container"></a>. Clique em **+ Contêiner** na parte superior da barra e forneça um nome para o contêiner de Blobs.
 
-#. Without leaving your dashboard, click on **Access keys** on the sidebar menu and copy the Connection string.
+#<a name="-without-leaving-your-dashboard-click-on-access-keys-on-the-sidebar-menu-and-copy-the-connection-string"></a>. Sem sair do painel, clique em **Chaves de acesso** no menu da barra lateral e copie a cadeia de conexão.
 
     .. image:: _static/images/snaps/access.png
             :align: center
@@ -48,35 +48,33 @@ We already created a Storage Account in the :ref:`deployfn` section. The next st
 
 .. _attachblob:
 
-2. Attach Blob binding
+2. Anexar associação de Blobs
 ******************************************
 
-Now that you created the Blob container, you need to add the binding to your function.
+Agora que você criou o contêiner de Blobs, precisará adicionar a associação à sua função.
 
-1. Back in VS Code click on the **Azure** extension on the sidebar and then right-click on your function name > **Add binding**.
-2. Since we want to store the outputs in the container, we need to select the **OUT** direction followed by **Azure Blob Storage**.
-3. Assign a name for the binding a path for the blob:
+1. De volta ao VS Code, clique na extensão do **Azure** na barra lateral e clique com o botão direito do mouse no nome da função > **Adicionar associação**.
+2. Como queremos armazenar as saídas no contêiner, precisamos selecionar a direção **OUT** seguida por **Armazenamento de Blobs do Azure**.
+3. Atribua um nome para a associação de um caminho para o blob:
 
     .. code-block::
 
         functionblob/{DateTime}.csv
 
-    Notice that I am using the name of the container I created before and the binding expression ``DateTime`` which resolves to ``DateTime.UtcNow``. The following blob path in a ``function.json`` file creates a blob with a name like ``2020-04-16T17-59-55Z.txt``.
+    Observe que estou usando o nome do contêiner que criei antes e a expressão de associação ``DateTime`` que é resolvida para ``DateTime.UtcNow``. O caminho de blob a seguir em um arquivo ``function.json`` cria um blob com um nome como ``2020-04-16T17-59-55Z.txt``.
 
-4. Select **AzureWebJobsStorage** for your local settings.
+4. Selecione **AzureWebJobsStorage** para as configurações locais.
 
-Once completed, your ``function.json`` file should look like this:
+Depois de concluído, seu arquivo ``function.json`` deve ter a seguinte aparência:
 
     .. literalinclude:: ../solutions/02-timer-function-Blob-binding/timer-function/function.json
         :language: json
         :caption: function.json
 
 
-5. Add the **Storage access key** that you copied before to your ``local.settings.json``. If you added your storage account through the Azure functions extensions, this should already be populated.
+5. Adicione a **Chave de acesso de armazenamento** que você copiou antes ao seu ``local.settings.json``. Se você adicionou sua conta de armazenamento por meio das extensões de funções do Azure, isso já deve estar preenchido.
 
-    .. code-block::
-        :caption: local.settings.json
-        :emphasize-lines: 4
+    .. code-block:: :caption: local.settings.json :emphasize-lines: 4
 
         {
             "IsEncrypted": false,
@@ -89,22 +87,22 @@ Once completed, your ``function.json`` file should look like this:
 
 .. _blobfunction: 
 
-3. Update your function
+3. Atualizar sua função
 *****************************
 
-We now need to update the function so that:
+Agora, precisamos atualizar a função para ela:
 
-- Save the collected API items in a CSV file
-- Store the file in the Blob container
+- Salvar os itens de API coletados em um arquivo CSV
+- Armazenar o arquivo no contêiner de Blobs
 
-Updating the `main_function.py` file:
+Atualizar o arquivo `main_function.py`:
 
     .. literalinclude:: ../solutions/02-timer-function-Blob-binding/timer-function/main_function.py
         :language: python
         :caption: main_function.py
         :emphasize-lines: 7, 33-53, 61-63, 87-93
 
-Notice these lines in the above code:
+Observe estas linhas no código acima:
 
 .. code-block:: python
 
@@ -115,36 +113,34 @@ Notice these lines in the above code:
             context: func.Context
         ) -> None:
 
-The ``outputBlob: func.Out[bytes]`` specifies the binding we just created and ``context: func.Context`` allows the function to get the context from the `host.json` file.
+O ``outputBlob: func.Out[bytes]`` especifica a associação que acabamos de criar, e ``context: func.Context`` permite que a função obtenha o contexto do arquivo `host.json`.
 
-And also the script to access the StackExchange API:
+E também o script para acessar a API StackExchange:
 
     .. literalinclude:: ../solutions/02-timer-function-Blob-binding/timer-function/utils/stack.py
         :language: python
         :caption: utils/stack.py
 
-If you want, you can follow the steps in section :ref:`localdebug` to run and debug your function locally.
+Se desejar, você poderá seguir as etapas na seção :ref:`localdebug` para executar e depurar sua função localmente.
 
-Otherwise, you can deploy and execute your function as we did in section :ref:`deployandrun` (except for the variables setting section as your storage details should be there already).
+Caso contrário, você pode implantar e executar sua função como fizemos na seção :ref:`deployandrun` (exceto para a seção de configuração de variáveis, já que os detalhes de armazenamento já devem estar lá).
 
 
-.. tip:: When deploying your function, you can click on the pop-up window **output window** link to track the deployment status/progress.
+.. tip:: Ao implantar sua função, você pode clicar no link da janela pop-up **janela de saída** para acompanhar o status/andamento da implantação.
 
     .. image:: _static/images/snaps/explore.png
         :align: center
         :alt: Explore deploy
 
-After running your function you can head over to **Storage accounts > <your account> > Containers** and click on your function Blob container.
+Depois de executar a função, você pode ir para **Contas de armazenamento > <your account> > Contêineres** e clicar no contêiner de blobs de função.
 
-If all runs smoothly, you should be able to see the created file.
+Se tudo funcionar sem problemas, você poderá ver o arquivo criado.
 
-.. image:: _static/images/snaps/blob_file.png
-        :align: center
-        :alt: Blob file
+.. image:: _static/images/snaps/blob_file.png :align: center :alt: Arquivo de Blob
 
 
 
-|floppy| Additional resources and docs
+<a name="floppy-additional-resources-and-docs"></a>|floppy| Recursos e documentos adicionais
 ---------------------------------------
 
 - `ARM template for Blob Storage container <https://github.com/trallard/pycon2020-azure-functions/tree/master/storage-blob-container>`_
