@@ -1,64 +1,62 @@
-Introduction to serverless and Azure functions
+<a name="introduction-to-serverless-and-azure-functions"></a>Introdução à computação sem servidor e às funções do Azure
 ================================================
 
-|light| What is serverless computing?
+<a name="light-what-is-serverless-computing"></a>|light| O que é a computação sem servidor?
 ---------------------------------------
 
-Serverless is also known as Function as a Service (FaaS).
+A computação sem servidor também é conhecida como FaaS (função como serviço).
 
-In a nutshell:
+Resumindo:
 
-#. Serverless architecture makes use of third-party services. They might, for example, run your code on managed, ephemeral containers in a FaaS platform (Azure functions).
-#. Servers are still used to run your applications. But in this case, your cloud provider takes care of the management, provisioning and scaling (Microsoft Azure in this case).
+#<a name="-serverless-architecture-makes-use-of-third-party-services-they-might-for-example-run-your-code-on-managed-ephemeral-containers-in-a-faas-platform-azure-functions"></a>. A arquitetura sem servidor usa serviços de terceiros. Eles podem, por exemplo, executar seu código em contêineres gerenciados e efêmeros em uma plataforma FaaS (funções do Azure).
+#<a name="-servers-are-still-used-to-run-your-applications-but-in-this-case-your-cloud-provider-takes-care-of-the-management-provisioning-and-scaling-microsoft-azure-in-this-case"></a>. Os servidores ainda são usados para executar seus aplicativos. Mas, nesse caso, seu provedor de nuvem cuida do gerenciamento, do provisionamento e do dimensionamento (neste caso, o Microsoft Azure).
 
-This allows you to focus on the code and deploy when ready, while your provider takes care of the infrastructure.
+Isso permite que você se concentre no código e implante-o quando estiver pronto, enquanto seu provedor cuida da infraestrutura.
 
-Some of the advantages of serverless are:
+Algumas das vantagens da computação sem servidor:
 
-- They are scalable: not only this scales automatically based on the increase and decrease in usage but also is highly available.
-- It can save you money: you pay only for the usage (number of executions) instead of for having a server running 24/7.
+- Ela é dimensionável: ela não só é dimensionada automaticamente com base no aumento e na diminuição do uso, mas também tem alta disponibilidade.
+- Ela pode economizar seu dinheiro: você paga apenas pelo uso (número de execuções) em vez de ter um servidor sendo executado em tempo integral.
 
-The following infographic provides more details about serverless:
+O infográfico a seguir fornece mais detalhes sobre a computação sem servidor:
 
-.. image:: _static/images/serverless.png
-    :alt: serverless infographic
+.. image:: _static/images/serverless.png :alt: serverless infographic
 
-Good use cases
+Bons casos de uso
 ****************
 
-Some good use cases for serverless are:
+Alguns bons casos de uso para a computação sem servidor:
 
-- **Image and video processing**: you can couple Azure functions with Azure Blob Storage and use a storage trigger for your function. Then your function can do the processing asynchronously.
-- **Internet of Things**: IoT applications can generate a lot of data through the sensors. You can use functions to process the data in a scalable manner.
-- **Data pipelines**: you can integrate multiple services to build scalable data pipelines.
+- **Processamento de imagem e vídeo**: você pode associar as funções do Azure ao Armazenamento de Blobs do Azure e usar um gatilho de armazenamento para sua função. Sua função poderá, então, realizar o processamento de forma assíncrona.
+- **Internet das Coisas**: os aplicativos de IoT podem gerar muitos dados por meio dos sensores. Você pode usar funções para processar os dados de maneira dimensionável.
+- **Pipelines de dados**: você pode integrar vários serviços para criar pipelines de dados dimensionáveis.
 
-|faas| Azure functions and serverless
+<a name="faas-azure-functions-and-serverless"></a>|faas| Funções do Azure e computação sem servidor
 ----------------------------------------
 
-FaaS allows you to run self-contained code snippets called **functions** in the cloud.
-Your functions are idle until particular events trigger them.
-Functions are self-contained, small, short-lived, and single-purpose.
-They disappear after execution - hence why they are called ephemeral.
+A FaaS permite que você execute trechos de código independentes chamados de **funções** na nuvem.
+Suas funções ficam ociosas até que eventos específicos as disparem.
+As funções são independentes, pequenas, de curta duração e de finalidade única.
+Elas desaparecem após a execução e, por esse motivo, são chamadas de efêmeras.
 
-Functions are very versatile - you can use a variety of triggers to call your function and execute your code.
-They can be set so that they always run the same task or to run specific tasks based on inputs.
+As funções são muito versáteis – você pode usar uma variedade de gatilhos para chamar sua função e executar seu código.
+Elas podem ser definidas para que sempre executem a mesma tarefa ou executem tarefas específicas com base em entradas.
 
-Microsoft Azure's FaaS is called `Azure Functions <https://azure.microsoft.com/en-gb/services/functions?WT.mc_id=pycon_tutorial-github-taallard>`_.
-This FaaS already supports multiple programming languages:
+A FaaS do Microsoft Azure é chamada de `Azure Functions <https://azure.microsoft.com/en-gb/services/functions?WT.mc_id=pycon_tutorial-github-taallard>`_.
+Essa FaaS já dá suporte a várias linguagens de programação:
 
-.. image:: https://azurecomcdn.azureedge.net/cvt-e918f8bc2be525756af58617c14443351ac83a8fd87a0b28d31919d627969098/images/page/services/functions/value-prop-5.svg
-    :alt: Functions languages
+.. image:: https://azurecomcdn.azureedge.net/cvt-e918f8bc2be525756af58617c14443351ac83a8fd87a0b28d31919d627969098/images/page/services/functions/value-prop-5.svg :alt: Linguagens de funções
 
-So we are going to take advantage of the Python support for this tutorial.
+Portanto, vamos aproveitar o suporte do Python para este tutorial.
 
-Azure provides three main plans for functions, which will determine the kind of instances used, execution times and pricing.
+O Azure fornece três planos principais para funções, que determinarão o tipo de instâncias usadas, os tempos de execução e os preços.
 
-For more details, check the `Azure functions consumption plans <https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale?WT.mc_id=pycon_tutorial-github-taallard>`_ docs.
+Para obter mais detalhes, confira os documentos `Azure functions consumption plans <https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale?WT.mc_id=pycon_tutorial-github-taallard>`_.
 
-.. note:: Since serverless functions are meant to be stateless, the resources inside the function will disappear once the code had finished executing (or the timeout is reached).
+.. note:: Como as funções sem servidor devem ser sem estado, os recursos dentro da função desaparecerão depois que o código tiver terminado a execução (ou o tempo limite for atingido).
 
 
-|floppy| Additional resources and docs
+<a name="floppy-additional-resources-and-docs"></a>|floppy| Recursos e documentos adicionais
 ---------------------------------------
 
 

@@ -1,34 +1,34 @@
-|api| Data acquisition with functions
+<a name="api-data-acquisition-with-functions"></a>|api| Aquisição de dados com funções
 =========================================
 
-We already have a working and deployed function, but so far it is not doing anything exciting.
+Já temos uma função operacional e implantada, mas até agora ela não está fazendo nada de interessante.
 
-Let's start working on the data processing part of the function.
+Vamos começar a trabalhar na parte de processamento de dados da função.
 
-.. tip:: The repository containing all the scripts and solutions to this tutorial can be found at `<https://github.com/trallard/pycon2020-azure-functions>`_.
+.. tip:: O repositório que contém todos os scripts e soluções para este tutorial pode ser encontrado em `<https://github.com/trallard/pycon2020-azure-functions>`_.
 
     👉🏼 The code for this section is located in `<https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/01-timer-function-data-acquisition>`_ 
 
 
-The details
+<a name="the-details"></a>Os detalhes
 -------------
-To demonstrate the capabilities of Azure functions for data processing scenarios, we will build the following pipeline:
+Para demonstrar os recursos das funções do Azure para cenários de processamento de dados, criaremos o seguinte pipeline:
 
-#. Collect data from the `StackExchange API <https://api.stackexchange.com/>`_ using the timer trigger. We will focus on extracting questions from StackOverflow within a time range and with specific tags.
-#. Store the raw data in our Azure storage account.
-#. Trigger the processing function that cleans the data and leaves it in a usable format.
+#<a name="-collect-data-from-the-stackexchange-api-httpsapistackexchangecom_-using-the-timer-trigger-we-will-focus-on-extracting-questions-from-stackoverflow-within-a-time-range-and-with-specific-tags"></a>. Coletar dados da `StackExchange API <https://api.stackexchange.com/>`_ usando o gatilho de temporizador. Focaremos em extrair perguntas do StackOverflow dentro de um intervalo de tempo e com marcas específicas.
+#<a name="-store-the-raw-data-in-our-azure-storage-account"></a>. Armazenar os dados brutos em nossa conta de armazenamento do Azure.
+#<a name="-trigger-the-processing-function-that-cleans-the-data-and-leaves-it-in-a-usable-format"></a>. Disparar a função de processamento que limpa os dados e os deixa em um formato utilizável.
 
-Let's get started!
+Vamos começar!
 
-Connecting to the StackExchange API
+<a name="connecting-to-the-stackexchange-api"></a>Conectar-se à API StackExchange
 -------------------------------------
 
-1. Create necessary files and dirs
+1. Criar os arquivos e diretórios necessários
 *********************************** 
 
-In the :ref:`functions101` section we created a basic timer function and explored the generated files.
+Na seção :ref:`functions101`, criamos uma função de temporizador básica e exploramos os arquivos gerados.
 
-To keep things neat we are going to create a ``utils`` folder as well and ``__init__.py`` and ``stack.py`` file in it. From the command line (bash):
+Para manter a organização, criaremos também uma pasta ``utils`` e arquivos ``__init__.py`` e ``stack.py`` nela. Na linha de comando (bash):
 
 .. code-block:: bash
 
@@ -37,44 +37,35 @@ To keep things neat we are going to create a ``utils`` folder as well and ``__in
     touch <your-function-dir>/utils/stack.py 
 
 
-2. Add methods 
+2. Adicionar métodos 
 *****************************
 
-Now that we have the necessary files we have to update  ``utils/stack.py`` to handle the requests to the StackExchange API:
+Agora que temos os arquivos necessários, precisamos atualizar ``utils/stack.py`` para lidar com as solicitações feitas para a API StackExchange:
 
-.. literalinclude:: ../solutions/01-timer-function-data-acquisition/timer-function/utils/stack.py
-        :language: python
-        :caption: utils/stack.py
+.. literalinclude:: ../solutions/01-timer-function-data-acquisition/timer-function/utils/stack.py :language: python :caption: utils/stack.py
 
-Note how we use the trigger time to set the ``todate`` and ``fromdate`` in the StackExchange query. 
+Observe como usamos o tempo de disparo para definir ``todate`` e ``fromdate`` na consulta de StackExchange. 
 
-So we need to modify the main script for our function too:
+Portanto, também precisamos modificar o script principal de nossa função:
 
-.. literalinclude:: ../solutions/01-timer-function-data-acquisition/timer-function/main_function.py
-        :language: python
-        :caption: __init__.py
+.. literalinclude:: ../solutions/01-timer-function-data-acquisition/timer-function/main_function.py :language: python :caption: __init__.py
 
-3. Tidying and finishing off
+3. Organizar e concluir
 *****************************
 
-1. To make it easier to identify files we will rename the function script to ``main_function.py``:
+1. Para facilitar a identificação dos arquivos, renomearemos o script de função para ``main_function.py``:
 
-    .. image:: _static/images/snaps/main_function.png
-            :align: center
-            :alt: Function name
+    .. image:: _static/images/snaps/main_function.png :align: center :alt: Nome da função
 
-.. warning:: You also need to change the name of the ``scriptFile`` in the ``function.json`` file. Otherwise, your function is not able to locate the file.
+.. warning:: Você também precisa alterar o nome do ``scriptFile`` no arquivo ``function.json``. Caso contrário, sua função não será capaz de localizar o arquivo.
 
-2. Since we are using *requests* and *python-dotenv* we need to update the ``requirements.txt`` file:
+2. Como estamos usando *solicitações* e *python-dotenv*, precisamos atualizar o arquivo ``requirements.txt``:
 
-.. literalinclude:: ../solutions/01-timer-function-data-acquisition/requirements.txt
-        :language: python
-        :caption: requirements.txt
+.. literalinclude:: ../solutions/01-timer-function-data-acquisition/requirements.txt :language: python :caption: requirements.txt
 
-3. Finally, we need to create a ``.env`` file to store API keys and other environment variables for local development and debugging. 
+3. Por fim, precisamos criar um arquivo ``.env`` para armazenar chaves de API e outras variáveis de ambiente para desenvolvimento e depuração locais. 
 
-.. code-block:: 
-    :caption: .env
+.. code-block:: :caption: .env
 
     # Stackexchange
 
@@ -83,22 +74,20 @@ So we need to modify the main script for our function too:
     SE_key = <your secret>
 
 
-.. warning:: **Do not** commit this .env file to version control. We will learn later on the tutorial how to securely add variables to your Azure functions. 
+.. warning:: **Não** confirme esse arquivo .env para o controle de versão. Aprenderemos posteriormente no tutorial como adicionar variáveis às suas funções do Azure com segurança. 
 
 .. _localdebug:
 
-4. Debugging and executing locally
+4. Depurar e executar localmente
 *************************************
 
-#. Start the debugging session in VS Code by pressing :kbd:`F5`. You should see the function output in the integrated terminal. 
-#. Click on the **Azure** extension on the VS Code sidebar and then expand the Functions section.
-#. Right-click on your function name (timer-function) and click on **Execute function now**. 
+#<a name="-start-the-debugging-session-in-vs-code-by-pressing-kbdf5-you-should-see-the-function-output-in-the-integrated-terminal"></a>. Inicie a sessão de depuração no VS Code pressionando :kbd:`F5`. Você deve ver a saída da função no terminal integrado. 
+#<a name="-click-on-the-azure-extension-on-the-vs-code-sidebar-and-then-expand-the-functions-section"></a>. Clique na extensão do **Azure**  na barra lateral do VS Code e expanda a seção Funções.
+#<a name="-right-click-on-your-function-name-timer-function-and-click-on-execute-function-now"></a>. Clique com o botão direito do mouse no nome da função (função temporizador) e clique em **Executar função agora**. 
 
-.. image:: _static/images/snaps/debug_function.png
-            :align: center
-            :alt: Function debugger
+.. image:: _static/images/snaps/debug_function.png :align: center :alt: Função de depurador
 
-If everything was correctly updated, then you should see the function output in the VS code integrated terminal.
+Se tudo tiver sido atualizado corretamente, você deverá ver a saída da função no terminal integrado do VS Code.
 
 .. code-block:: bash
 
@@ -112,48 +101,38 @@ If everything was correctly updated, then you should see the function output in 
 
 .. _deployandrun:
 
-5. Deploying your updated function
+5. Implantar sua função atualizada
 ************************************
 
-First, make sure to stop the localhost. You can do this either pressing the :kbd:`Ctrl + C` keys or clicking on the disconnect button from the debugging bar:
+Primeiro, certifique-se de interromper o localhost. Você pode fazer isso pressionando as teclas :kbd:`Ctrl + C` ou clicando no botão desconectar da barra de depuração:
 
-.. image:: _static/images/snaps/disconnect.png
-            :align: center
-            :alt: Disconnect
+.. image:: _static/images/snaps/disconnect.png :align: center :alt: Desconectar
 
-To deploy your updated function:
+Para implantar sua função atualizada:
 
-1. Click on the Azure extension on the VS Code sidebar and then click on the deploy to function app on the Azure functions section.
+1. Clique na extensão do Azure na barra lateral do VS Code e, em seguida, clique em implantar para o aplicativo de funções na seção de funções do Azure.
 
-2. Select the name of the app that you used before (since we want to update the existing instance).
+2. Selecione o nome do aplicativo que você usou antes (já que queremos atualizar a instância existente).
 
-    .. image:: _static/images/snaps/redeploy.png
-        :align: center
-        :alt: Confirm deployment
+    .. image:: _static/images/snaps/redeploy.png :align: center :alt: Confirmar Implantação
 
-3. Head over to |azureportal| and follow the same instructions as in :ref:`portalinst` to get to your function main page:
+3. Acesse o |azureportal| e siga as mesmas instruções de :ref:`portalinst` para ir até a página principal da sua função:
 
-    .. image:: _static/images/snaps/configuration.png
-        :align: center
-        :alt: Function config
+    .. image:: _static/images/snaps/configuration.png :align: center :alt: Configuração da função
 
-4. Click on **Configuration** and in the following screen click on + **New application setting** (1 in the image) to add the keys you stored in your local ``.env`` file.
-Add one by one as a separate value-pair (should look like 2 in image).
+4. Clique em **Configuração** e, na tela seguinte, clique em + **Nova configuração de aplicativo** (1 na imagem) para adicionar as chaves armazenadas em seu arquivo ``.env`` local.
+Adicione um por um como um par de valor separado (deve ser semelhante a 2 na imagem).
 
-    .. image:: _static/images/snaps/vars.png
-                    :align: center
-                    :alt: Variables settings 
+    .. image:: _static/images/snaps/vars.png :align: center :alt: Configurações de variáveis 
 
-5. Once completed, click on the Save button on the top bar (3 in image above).
-6. Execute your function on the cloud: go back to your function main page in |azureportal|. Then click on the name of your function (1 in the image below) and then on the **Run** button on the top right (2 in image).
+5. Depois de concluído, clique no botão Salvar na barra superior (3 na imagem acima).
+6. Execute sua função na nuvem: volte para a página principal da função no |azureportal|. Em seguida, clique no nome da sua função (1 na imagem abaixo) e, em seguida, no botão **Executar** no canto superior direito (2 na imagem).
 
-    .. image:: _static/images/snaps/cloud_run.png
-                    :align: center
-                    :alt: Run function on the cloud
+    .. image:: _static/images/snaps/vars.png :align: center :alt: Executar a função na nuvem
 
-You can now head to the monitor section of your function and see the logs and status of the run you just started.
+Agora, você pode ir para a seção monitor de sua função e ver os logs e o status da execução que acabou de iniciar.
 
-|floppy| Additional resources and docs
+<a name="floppy-additional-resources-and-docs"></a>|floppy| Recursos e documentos adicionais
 ---------------------------------------
 
 - `Stack Exchange API docs <https://api.stackexchange.com/docs/>`_ 

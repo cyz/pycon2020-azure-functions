@@ -1,17 +1,17 @@
 .. _functions101:
 
 
-|light| Your first Azure function
+<a name="light-your-first-azure-function"></a>|light| Sua primeira função do Azure
 =====================================
 
-We will start by creating your first Azure function.
-We will make use of VS Code to create a function that works every day at the same time.
+Vamos começar criando sua primeira função do Azure.
+Utilizaremos o VS Code para criar uma função que funcione todos os dias no mesmo horário.
 
 
-Creating your local project
+<a name="creating-your-local-project"></a>Crie seu projeto local
 ----------------------------
 
-#. Create a new folder on your local computer. This is where your function project will live.
+#<a name="-create-a-new-folder-on-your-local-computer-this-is-where-your-function-project-will-live"></a>. Crie uma pasta no computador local. Seu projeto de função ficará armazenado nela.
 
     For example, if using the command line (bash):
 
@@ -21,7 +21,7 @@ Creating your local project
 
         cd python-functions
 
-#. Start VS Code in the project folder (workspace)
+#<a name="-start-vs-code-in-the-project-folder-workspace"></a>. Inicie o VS Code na pasta do projeto (workspace)
 
     You can use the command line like so:
 
@@ -29,30 +29,28 @@ Creating your local project
 
         code .
 
-#. Click on the Azure icon on your activity bar (3 in the image)
-#. Then, in the Azure functions area select the Create new project icon (4 in the image)
+#<a name="-click-on-the-azure-icon-on-your-activity-bar-3-in-the-image"></a>. Clique no ícone do Azure na barra de atividade (3 na imagem)
+#<a name="-then-in-the-azure-functions-area-select-the-create-new-project-icon-4-in-the-image"></a>. Em seguida, na área de funções do Azure, selecione o ícone Criar projeto (4 na imagem)
 
     .. image:: _static/images/snaps/vs_code_functions1.png
         :height: 600px
         :align: center
         :alt: VS code sidebar icons
 
-#. Provide the following information:
+#<a name="-provide-the-following-information"></a>. Forneça as seguintes informações:
 
-    - **Select the folder that will contain your project**: either choose the current folder or select a different one
-    - **Select a language**: Python
-    - **Select a Python alias to create a virtual environment**: Select your preferred Python interpreter (needs to be supported)
-    - **Select a template**: Timer trigger
-    - **Provide a function name**: type a name for your project (I chose ``timer-function``)
-    - **Enter a cron expression**: We need to specify when the function will be executed, we do this through cron expressions. A cron expression is a string with 6 separate expressions which represent a given schedule via patterns. For this example I want it to run every day at 9:00 am so I am using: ``0 9 * * * *``
+    - **Selecione a pasta que conterá o projeto**: escolha a pasta atual ou selecione uma diferente
+    - **Selecione uma linguagem**: Python
+    - **Selecione um alias Python para criar um ambiente virtual**: selecione o intérprete Python preferencial (precisa ser compatível)
+    - **Selecione um modelo**: gatilho de temporizador
+    - **Forneça um nome de função**: digite um nome para seu projeto (escolhi ``timer-function``)
+    - **Insira uma expressão cron**: precisamos especificar quando a função será executada; fazemos isso por meio de expressões cron. Uma expressão cron é uma cadeia de caracteres com seis expressões separadas que representam determinado cronograma por meio de padrões. Para este exemplo, quero que ela seja executada todos os dias às 9:00, então estou usando: ``0 9 * * * *``
 
-    .. image:: _static/images/snaps/chron.png
-        :align: center
-        :alt: cron expresion example
+    .. image:: _static/images/snaps/chron.png :align: center :alt: cron expresion example
 
-.. note:: The default time zone for Azure Functions is UTC. Depending on your timezone and purpose you might need to adjust this.
+.. note:: O fuso horário padrão no Azure Functions é UTC. Dependendo do fuso horário e da finalidade, talvez seja necessário ajustar isso.
 
-The extension will create a `Python virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ as well as several files for the function:
+A extensão criará um `Python virtual environment <https://docs.python.org/3/tutorial/venv.html>`_, bem como vários arquivos para a função:
 
 .. code-block:: bash
 
@@ -69,14 +67,12 @@ The extension will create a `Python virtual environment <https://docs.python.org
     ├── proxies.json
     └── requirements.txt
 
-The basics of your new function
+<a name="the-basics-of-your-new-function"></a>Conceitos básicos da sua nova função
 ----------------------------------
 
-The ``function.json`` file provides main configuration for your function:
+O arquivo ``function.json`` fornece a configuração principal da sua função:
 
-.. code-block:: json
-    :name: function.json
-    :caption: function.json
+.. code-block:: json :name: function.json :caption: function.json
 
     {
         "scriptFile": "__init__.py",
@@ -90,14 +86,12 @@ The ``function.json`` file provides main configuration for your function:
         ]
     }
 
-You will notice that there is a ``bindings`` element. This is marked as ``"direction": "in"`` which will correspond to the incoming signal to trigger the function.
-In this case, we are using a cron expression to trigger the function every day at 9:00am.
+Você observará que há um elemento ``bindings``. Ele é marcado como ``"direction": "in"``, que corresponderá ao sinal de entrada para disparar a função.
+Nesse caso, estamos usando uma expressão cron para disparar a função todos os dias às 9:00.
 
-You will also notice that there is a ``__init__.py`` script (which is also the script file described in the ``function.json`` above).
+Você também observará que há um script ``__init__.py`` (que também é o arquivo de script descrito em ``function.json`` acima).
 
-.. code-block:: python
-    :name: __init__.py
-    :caption: __init__.py
+.. code-block:: python :name: __init__.py :caption: __init__.py
 
 
     import datetime
@@ -117,33 +111,28 @@ You will also notice that there is a ``__init__.py`` script (which is also the s
         logging.info("Python timer trigger function ran at %s", utc_timestamp)
 
 
-Running your function locally
+<a name="running-your-function-locally"></a>Executar sua função localmente
 -------------------------------
 
-Now that we have inspected the function, we are ready to run it locally. You can do so by pressing :kbd:`F5`.
-This will launch the debugging extension.
-Since we are using the timer trigger, we need to set up an Azure storage account. This is mainly to keep logs and other outputs. 
-So you might get the following warning the first time you try and run your function locally.
+Agora que inspecionamos a função, estamos prontos para executá-la localmente. Você pode fazer isso pressionando :kbd:`F5`.
+Isso iniciará a extensão de depuração.
+Como estamos usando o gatilho de temporizador, precisamos configurar uma conta de armazenamento do Azure. Ela servirá principalmente para manter os logs e outras saídas. Portanto, você poderá receber o aviso a seguir na primeira vez que tentar executar a função localmente.
 
-.. image:: _static/images/snaps/storage.png
-    :align: center
-    :alt: VS code debugger - add storage
+.. image:: _static/images/snaps/storage.png :align: center :alt: Depurador do VS Code – adicionar armazenamento
 
-In the following windows, select these options:
+Nas janelas seguintes, selecione estas opções:
 
-- Create a new storage account: make sure to give it a meaningful name (note only letters and numbers are accepted)
-- **Resource group**: we want all of our services to be together so choose to create a new resource group and give it a name
-- **Region**: this corresponds to the datacentre where your resources will be located (for example Central US)
+- Criar uma conta de armazenamento: certifique-se de dar a ela um nome significativo (apenas letras e números são aceitos)
+- **Grupo de recursos**: queremos que todos os nossos serviços fiquem juntos, portanto, opte por criar um grupo de recursos e dê a ele um nome
+- **Região**: corresponde ao data center onde seus recursos ficarão localizados (por exemplo, EUA Central)
 
-.. note:: You will need to be logged into Azure for you to be able to create your Storage Account. If you need help with this check :ref:`login_azure`.
+.. note:: Você precisará estar conectado ao Azure para poder criar sua conta de armazenamento. Se precisar de ajuda com essa tarefa, confira :ref:`login_azure`.
 
-Once your storage account is created (if needed), you should see the output of the Azure function in your terminal.
+Depois que sua conta de armazenamento for criada (se necessário), você deverá ver a saída da função do Azure em seu terminal.
 
-.. image:: _static/images/snaps/functions_debug.png
-    :align: center
-    :alt: Running functions locally
+.. image:: _static/images/snaps/functions_debug.png :align: center :alt: Executar funções localmente
 
-If I change the cron expression to run every hour at 10 mins past the hour ``10 */1 * * * *`` for demo purposes. Then in the console output I should see when the fynction is due:
+Se eu alterar a expressão cron para ser executada a cada hora, dez minutos após o horário ``10 */1 * * * *``, para fins de demonstração, deverei ver o prazo da função na saída do console:
 
 .. code-block:: bash
 
@@ -162,35 +151,33 @@ If I change the cron expression to run every hour at 10 mins past the hour ``10 
 
 
 
-Further down the output you should see when the function is next due:
+Mais abaixo na saída, você deverá ver quando é o próximo prazo da função:
 
-To stop the function, you can press kbd:`CTRL + C`.
+Para interromper a função, você pode pressionar kbd:`CTRL + C`.
 
 
 
 .. _login_azure:
 
-Log into Azure from VS Code
+<a name="log-into-azure-from-vs-code"></a>Entrar no Azure pelo VS Code
 -----------------------------
 
-1. If you aren't already signed in, choose the Azure icon in the Activity bar. In the Azure: Functions area, select Sign in to Azure.
+1. Se você ainda não tiver entrado, escolha o ícone do Azure na barra de Atividades. No Azure: Na área de funções, selecione Entrar no Azure.
 
-    .. image:: https://docs.microsoft.com/en-us/azure/includes/media/functions-sign-in-vs-code/functions-sign-into-azure.png
-        :alt: VS code sign in
-        :align: center
+    .. image:: https://docs.microsoft.com/en-us/azure/includes/media/functions-sign-in-vs-code/functions-sign-into-azure.png :alt: VS code sign in :align: center
 
-2. When prompted in the browser, choose your Azure account and sign in using your Azure account credentials.
-3. After you've successfully signed in, you can close the new browser window. The subscriptions that belong to your Azure account are displayed in the Sidebar. You should also be able to see the email you have logged into on the bottom status bar in VSCode.
+2. Quando solicitado no navegador, escolha sua conta do Azure e entre usando as credenciais da sua conta do Azure.
+3. Depois de entrar com êxito, você poderá fechar a nova janela do navegador. As assinaturas que pertencem à sua conta do Azure são exibidas na barra lateral. Você também deve poder visualizar o email com o qual você entrou na barra de status inferior no VSCode.
 
 
-|floppy| Additional resources and docs
+<a name="floppy-additional-resources-and-docs"></a>|floppy| Recursos e documentos adicionais
 ---------------------------------------
 
 - `Time trigger for Azure functions official docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=csharp?WT.mc_id=pycon_tutorial-github-taallard>`_
 - `Azure functions cron cheatsheet <https://arminreiter.com/2015/02/azure-functions-time-trigger-cron-cheat-sheet/>`_
 - `Cron generator <https://crontab.guru/#0_9_*_*_*>`_
 - `Cron tab cheatsheet <https://www.codementor.io/@akul08/the-ultimate-crontab-cheatsheet-5op0f7o4r>`_
-- A handy blog about dealing with `Time Zones <https://dev.to/azure/getting-rid-of-time-zone-issues-within-azure-functions-4066>`_ in Azure functions
-- Azure functions `project structure docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp#generated-project-files?WT.mc_id=pycon_tutorial-github-taallard>`_
-- Human Cron expression `descriptor <https://cronexpressiondescriptor.azurewebsites.net/>`_  super handy if you are only getting familiar with cron expressions
+- Um blog útil sobre como lidar com `Time Zones <https://dev.to/azure/getting-rid-of-time-zone-issues-within-azure-functions-4066>`_ nas funções do Azure
+- Funções do Azure `project structure docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp#generated-project-files?WT.mc_id=pycon_tutorial-github-taallard>`_
+- Expressão cron humana `descriptor <https://cronexpressiondescriptor.azurewebsites.net/>`_ muito útil se você estiver apenas se familiarizando as expressões cron
 - `Python type hints cheatsheet <https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html>`_ 
